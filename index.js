@@ -19,6 +19,42 @@ async function getWeatherForecast(location){
 
 }
 
+
+
+getWeatherForecast("Vellore").then((data) => {
+    console.log(data);
+})
+
+function Forecast(location){
+getWeatherForecast(location).then((data) => {
+    const div = document.createElement("div");
+    div.innerHTML = "<h1> Location: " + data.location.name + "</h1>";
+    div.style = "text-align:center;"
+    document.body.appendChild(div);
+    data.forecast.forecastday.forEach((day)=>{
+        const headingMain = document.createElement("h1");
+        headingMain.textContent = "Weather Report "+ day.date;
+        headingMain.style = " background-color:lightgray;border-radius:20px;padding:15px;text-align: center; font-size: 50px;";
+
+        const headingOne = document.createElement("h1");
+        const p = document.createElement("p");
+        const headingTwo = document.createElement("h1");
+        const p3 = document.createElement("p");
+        const p2 = document.createElement("p");
+        p.textContent = "Average Temperature: " + day.day.avgtemp_c;
+        p3.textContent = "Condition: " + day.day.condition.text;
+        p2.textContent = "Humidity: " + day.day.avghumidity;
+        const div = document.createElement("div");
+        div.appendChild(headingMain);
+        div.appendChild(p);
+        div.appendChild(p3);
+        div.appendChild(p2);
+        div.id = "container";
+        document.body.appendChild(div);
+    })
+
+})}
+/*
 getWeather("Vellore").then(function(data){
     const headingMain = document.createElement("h1");
     headingMain.textContent = "Weather Report of Current Time";
@@ -41,31 +77,11 @@ getWeather("Vellore").then(function(data){
     div.id = "container";
     document.body.appendChild(div);
 });
+*/
+const btn = document.getElementById("submit");
 
-getWeatherForecast("Vellore").then((data) => {
-    console.log(data);
-})
-
-getWeatherForecast("Vellore").then((data) => {
-    data.forecast.forecastday.forEach((day)=>{
-        const headingMain = document.createElement("h1");
-        headingMain.textContent = "Weather Report "+ day.date;
-        headingMain.style = " background-color:lightgray;border-radius:20px;padding:15px;text-align: center; font-size: 50px;";
-
-        const headingOne = document.createElement("h1");
-        const p = document.createElement("p");
-        const headingTwo = document.createElement("h1");
-        const p3 = document.createElement("p");
-        const p2 = document.createElement("p");
-        p.textContent = "Average Temperature: " + day.day.avgtemp_c;
-        p3.textContent = "Condition: " + day.day.condition.text;
-        p2.textContent = "Humidity: " + day.day.avghumidity;
-        const div = document.createElement("div");
-        div.appendChild(headingMain);
-        div.appendChild(p);
-        div.appendChild(p3);
-        div.appendChild(p2);
-        div.id = "container";
-        document.body.appendChild(div);
-    })
+btn.addEventListener("click", function(){
+    const inp = document.getElementById("loc");
+    console.log(inp.value);
+    Forecast(inp.value);  
 })
